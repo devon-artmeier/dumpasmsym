@@ -1,5 +1,7 @@
 # Assembly Output Symbol Extractor
 
+[![Build Status](https://github.com/devon-artmeier/extract-asm-symbols/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/extract-asm-symbols/actions/workflows/cmake-multi-platform.yml)
+
 This is a tool to extract symbols from Assembly output files.
 
 ## Supports
