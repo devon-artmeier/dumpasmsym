@@ -20,12 +20,12 @@ This is a tool to extract symbols from Assembly output files.
                                 bin - Binary (default)
                                 asm - Assembly
                                 c   - C
-               <-v [type]>    - Value type
+               <-v [type]>    - Value type (TEXT OUTPUT MODE ONLY)
                                 u32 - Unsigned 32-bit (default)
                                 u64 - Unsigned 64-bit
                                 s32 - Signed 32-bit
                                 s64 - Signed 64-bit
-               <-b [base]>    - Numerical system
+               <-b [base]>    - Numerical system (TEXT OUTPUT MODE ONLY)
                                 hex - Hexadecimal (default)
                                 dec - Decimal
                                 bin - Binary
