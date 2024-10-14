@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	Symbols*    symbols     = new Symbols();
+	Symbols     symbols;
 	std::string input_file  = "";
 	std::string output_file = "";
 	OutputMode  output_mode = OutputMode::Binary;
@@ -123,32 +123,32 @@ int main(int argc, char* argv[])
 			}
 
 			if (CheckArgument(argc, argv, i, "f")) {
-				symbols->AddSymbolInclude(argv[i]);
+				symbols.AddSymbolInclude(argv[i]);
 				continue;
 			}
 
 			if (CheckArgument(argc, argv, i, "x")) {
-				symbols->AddSymbolExclude(argv[i]);
+				symbols.AddSymbolExclude(argv[i]);
 				continue;
 			}
 
 			if (CheckArgument(argc, argv, i, "p")) {
-				symbols->AddPrefixInclude(argv[i]);
+				symbols.AddPrefixInclude(argv[i]);
 				continue;
 			}
 
 			if (CheckArgument(argc, argv, i, "xp")) {
-				symbols->AddPrefixExclude(argv[i]);
+				symbols.AddPrefixExclude(argv[i]);
 				continue;
 			}
 
 			if (CheckArgument(argc, argv, i, "s")) {
-				symbols->AddSuffixInclude(argv[i]);
+				symbols.AddSuffixInclude(argv[i]);
 				continue;
 			}
 
 			if (CheckArgument(argc, argv, i, "xs")) {
-				symbols->AddSuffixExclude(argv[i]);
+				symbols.AddSuffixExclude(argv[i]);
 				continue;
 			}
 
@@ -162,15 +162,13 @@ int main(int argc, char* argv[])
 			throw std::runtime_error("Output symbol file not defined.");
 		}
 
-		symbols->LoadSymbols(input_file);
-		symbols->Filter();
-		symbols->Output(output_file, value_type, number_base, output_mode);
+		symbols.LoadSymbols(input_file);
+		symbols.Filter();
+		symbols.Output(output_file, value_type, number_base, output_mode);
 	} catch (std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
-		delete symbols;
 		return -1;
 	}
 
-	delete symbols;
 	return 0;
 }
