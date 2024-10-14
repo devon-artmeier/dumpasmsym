@@ -35,3 +35,13 @@ This is a tool to extract symbols from Assembly output files.
                <-xp [prefix]> - Exclude symbols with prefix
                <-s [suffix]>  - Only include symbols with suffix
                <-xs [suffix]> - Exclude symbols with suffix
+
+## Binary Output Format
+
+    Little endian
+    
+    Number of symbols (4 bytes)
+    For each symbol:
+        Name character count (1 byte)
+        Name string data
+        Value (8 bytes)
