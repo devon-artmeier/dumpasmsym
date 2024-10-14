@@ -15,6 +15,7 @@
 */
 
 #include <iostream>
+#include <stdexcept>
 #include "helpers.hpp"
 #include "symbols.hpp"
 
@@ -53,7 +54,7 @@ int main(int argc, char* argv[])
 		for (int i = 1; i < argc; i++) {
 			if (CheckArgument(argc, argv, i, "i")) {
 				if (!input_file.empty()) {
-					throw std::exception("Input file already defined.");
+					throw std::runtime_error("Input file already defined.");
 				}
 
 				input_file = argv[i];
@@ -62,7 +63,7 @@ int main(int argc, char* argv[])
 
 			if (CheckArgument(argc, argv, i, "o")) {
 				if (!output_file.empty()) {
-					throw std::exception("Output file already defined.");
+					throw std::runtime_error("Output file already defined.");
 				}
 
 				output_file = argv[i];
@@ -81,7 +82,7 @@ int main(int argc, char* argv[])
 				} else if (type.compare("s64") == 0) {
 					value_type = ValueType::Signed64;
 				} else {
-					throw std::exception(("Invalid value type \"" + (std::string)argv[i] + "\"").c_str());
+					throw std::runtime_error(("Invalid value type \"" + (std::string)argv[i] + "\"").c_str());
 				}
 
 				continue;
@@ -97,7 +98,7 @@ int main(int argc, char* argv[])
 				} else if (type.compare("bin") == 0) {
 					number_base = NumberBase::Binary;
 				} else {
-					throw std::exception(("Invalid numerical system \"" + (std::string)argv[i] + "\"").c_str());
+					throw std::runtime_error(("Invalid numerical system \"" + (std::string)argv[i] + "\"").c_str());
 				}
 
 				continue;
@@ -133,14 +134,14 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
-			throw std::exception(("Unknown argument \"" + (std::string)argv[i] + "\".").c_str());
+			throw std::runtime_error(("Unknown argument \"" + (std::string)argv[i] + "\".").c_str());
 		}
 
 		if (input_file.empty()) {
-			throw std::exception("Input symbol file not defined.");
+			throw std::runtime_error("Input symbol file not defined.");
 		}
 		if (output_file.empty()) {
-			throw std::exception("Output symbol file not defined.");
+			throw std::runtime_error("Output symbol file not defined.");
 		}
 
 		symbols->LoadSymbols(input_file);

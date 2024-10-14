@@ -19,6 +19,7 @@
 #include <cstring>
 #include <fstream>
 #include <iomanip>
+#include <stdexcept>
 #include "helpers.hpp"
 #include "symbols.hpp"
 
@@ -36,7 +37,7 @@ void Symbols::LoadSymbols(const std::string& file_name)
 		return;
 	}
 
-	throw std::exception(("\"" + file_name + "\" is not a valid file.").c_str());
+	throw std::runtime_error(("\"" + file_name + "\" is not a valid file.").c_str());
 }
 
 bool Symbols::LoadPsyQSymbols(const std::string& file_name)
@@ -45,7 +46,7 @@ bool Symbols::LoadPsyQSymbols(const std::string& file_name)
 
 	std::ifstream input(file_name, std::ios::in | std::ios::binary);
 	if (!input.is_open()) {
-		throw std::exception(("Cannot open \"" + file_name + "\" for reading.").c_str());
+		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
 	}
 
 	char read_buffer[4];
@@ -89,7 +90,7 @@ bool Symbols::LoadVObjSymbols(const std::string& file_name)
 
 	std::ifstream input(file_name, std::ios::in | std::ios::binary);
 	if (!input.is_open()) {
-		throw std::exception(("Cannot open \"" + file_name  + "\" for reading.").c_str());
+		throw std::runtime_error(("Cannot open \"" + file_name  + "\" for reading.").c_str());
 	}
 
 	char read_buffer[5];
@@ -216,7 +217,7 @@ void Symbols::Output(const std::string& file_name, ValueType value_type, NumberB
 {
 	std::ofstream output(file_name, std::ios::out);
 	if (!output.is_open()) {
-		throw std::exception(("Cannot open \"" + file_name + "\" for writing.").c_str());
+		throw std::runtime_error(("Cannot open \"" + file_name + "\" for writing.").c_str());
 	}
 
 	int line_length = 0;

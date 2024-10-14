@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <stdexcept>
 #include "helpers.hpp"
 
 std::string StringToLower(const std::string& str)
@@ -34,7 +35,7 @@ bool CheckArgument(const int argc, char* argv[], int& index, const std::string& 
 
 	if (strcmp(argv[index], ("-" + option_copy).c_str()) == 0) {
 		if (++index >= argc) {
-			throw std::exception(("Missing parameter for \"-" + option + "\"").c_str());
+			throw std::runtime_error(("Missing parameter for \"-" + option + "\"").c_str());
 		}
 		return true;
 	}
@@ -51,10 +52,9 @@ void ReadInput(std::ifstream& input, char* const read_buffer, const std::streams
 	std::streamsize actual_read_count = input.gcount();
 
 	if (actual_read_count == 0) {
-		throw std::exception("Reached end of file prematurely.");
-	}
-	else if (actual_read_count < 0) {
-		throw std::exception("Failed to read from file.");
+		throw std::runtime_error("Reached end of file prematurely.");
+	} else if (actual_read_count < 0) {
+		throw std::runtime_error("Failed to read from file.");
 	}
 }
 
