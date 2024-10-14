@@ -14,22 +14,25 @@
 	PERFORMANCE OF THIS SOFTWARE.
 */
 
-#include "helpers.hpp"
-#include "symbols.hpp"
+#include "shared.hpp"
 
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		std::cout << "Usage: extract-symbols -i [input] -o [output] <-v [type]> <-b [base]> <-f [symbol]> <-x [symbol]> " << std::endl <<
-		             "                       <-p [prefix]> <-xp [prefix]> <-s [suffix]> <-xs [suffix]>" << std::endl << std::endl <<
+		std::cout << "Usage: extract-symbols -i [input] -o [output] <-m [mode]> <-v [type]> <-b [base]> <-f [symbol]>" << std::endl <<
+		             "                       <-x [symbol]> <-p [prefix]> <-xp [prefix]> <-s [suffix]> <-xs [suffix]>" << std::endl << std::endl <<
 		             "           -i [input]     - Input file" << std::endl <<
 		             "           -o [output]    - Output file" << std::endl <<
-		             "           <-v [type]>    - Value type" << std::endl <<
+		             "           <-m [mode]>    - Output mode" << std::endl <<
+		             "                            bin - Binary (default)" << std::endl <<
+		             "                            asm - Assembly" << std::endl <<
+		             "                            c   - C" << std::endl <<
+		             "           <-v [type]>    - Value type (TEXT OUTPUT MODE ONLY)" << std::endl <<
 		             "                            u32 - Unsigned 32-bit (default)" << std::endl <<
 		             "                            u64 - Unsigned 64-bit" << std::endl <<
 		             "                            s32 - Signed 32-bit" << std::endl <<
 		             "                            s64 - Signed 64-bit" << std::endl <<
-		             "           <-b [base]>    - Numerical system" << std::endl <<
+		             "           <-b [base]>    - Numerical system (TEXT OUTPUT MODE ONLY)" << std::endl <<
 		             "                            hex - Hexadecimal (default)" << std::endl <<
 		             "                            dec - Decimal" << std::endl <<
 		             "                            bin - Binary" << std::endl <<
@@ -45,6 +48,7 @@ int main(int argc, char* argv[])
 	Symbols*    symbols     = new Symbols();
 	std::string input_file  = "";
 	std::string output_file = "";
+	OutputMode  output_mode = OutputMode::Binary;
 	ValueType   value_type  = ValueType::Unsigned32;
 	NumberBase  number_base = NumberBase::Hex;
 
@@ -65,6 +69,22 @@ int main(int argc, char* argv[])
 				}
 
 				output_file = argv[i];
+				continue;
+			}
+
+			if (CheckArgument(argc, argv, i, "m")) {
+				std::string mode = StringToLower(argv[i]);
+
+				if (mode.compare("bin") == 0) {
+					output_mode = OutputMode::Binary;
+				} else if (mode.compare("asm") == 0) {
+					output_mode = OutputMode::Asm;
+				} else if (mode.compare("c") == 0) {
+					output_mode = OutputMode::C;
+				} else {
+					throw std::runtime_error(("Invalid output mode \"" + (std::string)argv[i] + "\"").c_str());
+				}
+
 				continue;
 			}
 
@@ -144,7 +164,7 @@ int main(int argc, char* argv[])
 
 		symbols->LoadSymbols(input_file);
 		symbols->Filter();
-		symbols->Output(output_file, value_type, number_base);
+		symbols->Output(output_file, value_type, number_base, output_mode);
 	} catch (std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;
 		delete symbols;

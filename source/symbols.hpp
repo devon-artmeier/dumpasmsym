@@ -17,43 +17,26 @@
 #ifndef SYMBOLS_HPP
 #define SYMBOLS_HPP
 
-struct Symbol
-{
-	std::string name;
-	long long   value;
-};
-
-enum class ValueType
-{
-	Unsigned32,
-	Unsigned64,
-	Signed32,
-	Signed64,
-};
-
-enum class NumberBase
-{
-	Hex,
-	Decimal,
-	Binary
-};
-
 class Symbols
 {
 public:
 	void LoadSymbols     (const std::string& file_name);
-	void AddSymbolInclude(std::string symbol);
-	void AddPrefixInclude(std::string prefix);
-	void AddSuffixInclude(std::string suffix);
-	void AddSymbolExclude(std::string symbol);
-	void AddPrefixExclude(std::string prefix);
-	void AddSuffixExclude(std::string suffix);
+	void AddSymbolInclude(const std::string& symbol);
+	void AddPrefixInclude(const std::string& prefix);
+	void AddSuffixInclude(const std::string& suffix);
+	void AddSymbolExclude(const std::string& symbol);
+	void AddPrefixExclude(const std::string& prefix);
+	void AddSuffixExclude(const std::string& suffix);
 	void Filter          ();
-	void Output          (const std::string& file_name, ValueType value_type, NumberBase number_base);
+	void Output          (const std::string& file_name, const ValueType value_type, const NumberBase number_base, const OutputMode output_mode);
 
 private:
+	int  GetLineLength      ();
 	bool LoadPsyqSymbols    (const std::string& file_name);
 	bool LoadVasmVobjSymbols(const std::string& file_name);
+	void OutputBinary       (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
+	void OutputAsm          (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
+	void OutputC            (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
 
 	std::string              input_file_name;
 	std::vector<Symbol>      symbols;
@@ -65,4 +48,4 @@ private:
 	std::vector<std::string> suffix_excludes;
 };
 
-#endif // VOBJ_HPP
+#endif // SYMBOLS_HPP

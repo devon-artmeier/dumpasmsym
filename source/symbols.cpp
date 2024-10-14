@@ -14,11 +14,7 @@
 	PERFORMANCE OF THIS SOFTWARE.
 */
 
-#include <algorithm>
-#include <bitset>
-#include <iomanip>
-#include "helpers.hpp"
-#include "symbols.hpp"
+#include "shared.hpp"
 
 static bool CompareSymbols(const Symbol symbol_1, const Symbol symbol_2)
 {
@@ -37,32 +33,32 @@ void Symbols::LoadSymbols(const std::string& file_name)
 	throw std::runtime_error(("\"" + file_name + "\" is not a valid file.").c_str());
 }
 
-void Symbols::AddSymbolInclude(std::string symbol)
+void Symbols::AddSymbolInclude(const std::string& symbol)
 {
 	this->symbol_includes.push_back(symbol);
 }
 
-void Symbols::AddPrefixInclude(std::string prefix)
+void Symbols::AddPrefixInclude(const std::string& prefix)
 {
 	this->prefix_includes.push_back(prefix);
 }
 
-void Symbols::AddSuffixInclude(std::string suffix)
+void Symbols::AddSuffixInclude(const std::string& suffix)
 {
 	this->suffix_includes.push_back(suffix);
 }
 
-void Symbols::AddSymbolExclude(std::string symbol)
+void Symbols::AddSymbolExclude(const std::string& symbol)
 {
 	this->symbol_excludes.push_back(symbol);
 }
 
-void Symbols::AddPrefixExclude(std::string prefix)
+void Symbols::AddPrefixExclude(const std::string& prefix)
 {
 	this->prefix_excludes.push_back(prefix);
 }
 
-void Symbols::AddSuffixExclude(std::string suffix)
+void Symbols::AddSuffixExclude(const std::string& suffix)
 {
 	this->suffix_excludes.push_back(suffix);
 }
@@ -122,13 +118,23 @@ void Symbols::Filter()
 	std::sort(this->symbols.begin(), this->symbols.end(), CompareSymbols);
 }
 
-void Symbols::Output(const std::string& file_name, ValueType value_type, NumberBase number_base)
+void Symbols::Output(const std::string& file_name, const ValueType value_type, const NumberBase number_base, const OutputMode output_mode)
 {
-	std::ofstream output(file_name, std::ios::out);
-	if (!output.is_open()) {
-		throw std::runtime_error(("Cannot open \"" + file_name + "\" for writing.").c_str());
+	switch (output_mode) {
+		case OutputMode::Binary:
+			this->OutputBinary(file_name, value_type, number_base);
+			break;
+		case OutputMode::Asm:
+			this->OutputAsm(file_name, value_type, number_base);
+			break;
+		case OutputMode::C:
+			this->OutputC(file_name, value_type, number_base);
+			break;
 	}
+}
 
+int Symbols::GetLineLength()
+{
 	int line_length = 0;
 	for (const auto& symbol : this->symbols) {
 		if (symbol.name.size() > line_length) {
@@ -141,44 +147,5 @@ void Symbols::Output(const std::string& file_name, ValueType value_type, NumberB
 	}
 	line_length += 8;
 
-	output << "; ------------------------------------------------------------------------------" << std::endl <<
-	          "; Symbols extracted from" << std::endl << "; " << this->input_file_name << std::endl <<
-	          "; ------------------------------------------------------------------------------" << std::endl << std::endl;
-
-	for (auto& symbol : this->symbols) {
-		output << std::left << std::setw(line_length) << symbol.name << "equ ";
-		
-		if (value_type == ValueType::Signed32 || value_type == ValueType::Signed64) {
-			if (symbol.value < 0) {
-				output << "-";
-				symbol.value = -symbol.value;
-			} else {
-				output << " ";
-			}
-		}
-
-		if (value_type == ValueType::Unsigned32 || value_type == ValueType::Signed32) {
-			symbol.value &= 0xFFFFFFFF;
-		}
-
-		switch (number_base) {
-			case NumberBase::Hex:
-				output << "0x" << std::hex << std::uppercase << symbol.value << std::endl;
-				break;
-			case NumberBase::Decimal:
-				output << symbol.value << std::endl;
-				break;
-			case NumberBase::Binary:
-				output << "0b";
-				if (value_type == ValueType::Unsigned32 || value_type == ValueType::Signed32) {
-					output << std::bitset<32>(symbol.value);
-				} else {
-					output << std::bitset<64>(symbol.value);
-				}
-				output << std::endl;
-				break;
-		}
-	}
-
-	output << std::endl << "; ------------------------------------------------------------------------------" << std::endl;
+	return line_length;
 }

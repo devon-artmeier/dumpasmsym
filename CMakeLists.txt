@@ -4,6 +4,9 @@ project(extract-asm-symbols LANGUAGES CXX)
 add_executable(extract-asm-symbols
 	"source/main.cpp"
 	"source/helpers.cpp"
-	"source/psyq.cpp"
-	"source/symbols.cpp"
-	"source/vasm_vobj.cpp")
+	"source/in_psyq.cpp"
+	"source/in_vasm_vobj.cpp"
+	"source/out_asm.cpp"
+	"source/out_binary.cpp"
+	"source/out_c.cpp"
+	"source/symbols.cpp")

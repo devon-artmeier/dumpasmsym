@@ -14,9 +14,7 @@
 	PERFORMANCE OF THIS SOFTWARE.
 */
 
-#include "helpers.hpp"
-#include "symbols.hpp"
-
+#include "shared.hpp"
 
 static long long ReadInputNumber(std::ifstream& input, bool is_signed)
 {

@@ -14,8 +14,7 @@
 	PERFORMANCE OF THIS SOFTWARE.
 */
 
-#include <algorithm>
-#include "helpers.hpp"
+#include "shared.hpp"
 
 std::string StringToLower(const std::string& str)
 {
@@ -24,7 +23,7 @@ std::string StringToLower(const std::string& str)
 	return lower_str;
 }
 
-bool CheckArgument(const int argc, char* argv[], int& index, const std::string& option, bool ignore_case)
+bool CheckArgument(const int argc, char* argv[], int& index, const std::string& option, const bool ignore_case)
 {
 	std::string option_copy = option;
 	if (ignore_case) {
@@ -64,4 +63,37 @@ bool StringStartsWith(const std::string& str, const std::string& prefix)
 bool StringEndsWith(const std::string& str, const std::string& suffix)
 {
 	return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
+void WriteOutputValue(std::ofstream& output, long long value, const ValueType value_type, const NumberBase number_base)
+{
+	if (value_type == ValueType::Signed32 || value_type == ValueType::Signed64) {
+		if (value < 0) {
+			output << "-";
+			value = -value;
+		} else {
+			output << " ";
+		}
+	}
+
+	if (value_type == ValueType::Unsigned32 || value_type == ValueType::Signed32) {
+		value &= 0xFFFFFFFF;
+	}
+
+	switch (number_base) {
+		case NumberBase::Hex:
+			output << "0x" << std::hex << std::uppercase << value;
+			break;
+		case NumberBase::Decimal:
+			output << value;
+			break;
+		case NumberBase::Binary:
+			output << "0b";
+			if (value_type == ValueType::Unsigned32 || value_type == ValueType::Signed32) {
+				output << std::bitset<32>(value);
+			} else {
+				output << std::bitset<64>(value);
+			}
+			break;
+	}
 }

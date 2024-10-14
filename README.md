@@ -11,11 +11,15 @@ This is a tool to extract symbols from Assembly output files.
 
 ## Usage
 
-    Usage: extract-symbols -i [input] -o [output] <-v [type]> <-b [base]> <-f [symbol]> <-x [symbol]>
-                           <-p [prefix]> <-xp [prefix]> <-s [suffix]> <-xs [suffix]>
+    Usage: extract-symbols -i [input] -o [output] <-m [mode]> <-v [type]> <-b [base]> <-f [symbol]>
+                           <-x [symbol]> <-p [prefix]> <-xp [prefix]> <-s [suffix]> <-xs [suffix]>
     
                -i [input]     - Input file
                -o [output]    - Output file
+               <-m [mode]>    - Output mode
+                                bin - Binary (default)
+                                asm - Assembly
+                                c   - C
                <-v [type]>    - Value type
                                 u32 - Unsigned 32-bit (default)
                                 u64 - Unsigned 64-bit
