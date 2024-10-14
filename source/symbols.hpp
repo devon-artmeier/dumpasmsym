@@ -17,9 +17,6 @@
 #ifndef SYMBOLS_HPP
 #define SYMBOLS_HPP
 
-#include <string>
-#include <vector>
-
 struct Symbol
 {
 	std::string name;
@@ -55,8 +52,8 @@ public:
 	void Output          (const std::string& file_name, ValueType value_type, NumberBase number_base);
 
 private:
-	bool LoadPsyQSymbols(const std::string& file_name);
-	bool LoadVObjSymbols(const std::string& file_name);
+	bool LoadPsyqSymbols    (const std::string& file_name);
+	bool LoadVasmVobjSymbols(const std::string& file_name);
 
 	std::string              input_file_name;
 	std::vector<Symbol>      symbols;

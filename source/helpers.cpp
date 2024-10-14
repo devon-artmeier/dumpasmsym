@@ -15,8 +15,6 @@
 */
 
 #include <algorithm>
-#include <cstring>
-#include <stdexcept>
 #include "helpers.hpp"
 
 std::string StringToLower(const std::string& str)
@@ -56,83 +54,6 @@ void ReadInput(std::ifstream& input, char* const read_buffer, const std::streams
 	} else if (actual_read_count < 0) {
 		throw std::runtime_error("Failed to read from file.");
 	}
-}
-
-long long ReadInputNumberPsyQ(std::ifstream& input, bool is_signed)
-{
-	long long value = 0;
-	char      read_buffer;
-
-	for (int i = 0; i < 4; i++) {
-		ReadInput(input, reinterpret_cast<char*>(&read_buffer), 1);
-		value |= static_cast<long long>(read_buffer) << (i << 3);
-	}
-
-	if (is_signed && (value & (1LL << 31))) {
-		value |= ~(static_cast<long long>(1LL << 32) - 1);
-	}
-
-	return value;
-}
-
-long long ReadInputNumberVObj(std::ifstream& input, bool is_signed)
-{
-	unsigned char read_buffer;
-	unsigned char bytes;
-	int           size;
-
-	ReadInput(input, reinterpret_cast<char*>(&bytes), 1);
-	if (bytes <= 0x7F) {
-		return static_cast<long long>(bytes);
-	}
-
-	long long value = 0;
-	if (bytes -= 0x80) {
-		size = bytes * 8;
-
-		int i = 0;
-		while (bytes--) {
-			ReadInput(input, reinterpret_cast<char*>(&read_buffer), 1);
-			value |= static_cast<long long>(read_buffer) << (i++ * 8);
-		}
-
-		if (is_signed && (value & (1LL << (size - 1)))) {
-			value |= ~(static_cast<long long>(1LL << (size)) - 1);
-		}
-	}
-
-	return value;
-}
-
-std::string ReadInputStringPsyQ(std::ifstream& input)
-{
-	unsigned char char_count;
-	ReadInput(input, reinterpret_cast<char*>(&char_count), 1);
-
-	char* string_buffer = new char[char_count + 1];
-	ReadInput(input, string_buffer, char_count);
-	string_buffer[char_count] = '\0';
-
-	std::string string = string_buffer;
-	delete[] string_buffer;
-
-	return string;
-}
-
-std::string ReadInputStringVObj(std::ifstream& input)
-{
-	unsigned char read_buffer;
-
-	std::string string = "";
-	while (true) {
-		ReadInput(input, reinterpret_cast<char*>(&read_buffer), 1);
-		if (read_buffer == 0) {
-			break;
-		}
-		string += read_buffer;
-	}
-
-	return string;
 }
 
 bool StringStartsWith(const std::string& str, const std::string& prefix)

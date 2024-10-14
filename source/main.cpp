@@ -14,8 +14,6 @@
 	PERFORMANCE OF THIS SOFTWARE.
 */
 
-#include <iostream>
-#include <stdexcept>
 #include "helpers.hpp"
 #include "symbols.hpp"
 

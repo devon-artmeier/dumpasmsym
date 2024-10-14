@@ -16,10 +16,7 @@
 
 #include <algorithm>
 #include <bitset>
-#include <cstring>
-#include <fstream>
 #include <iomanip>
-#include <stdexcept>
 #include "helpers.hpp"
 #include "symbols.hpp"
 
@@ -30,102 +27,14 @@ static bool CompareSymbols(const Symbol symbol_1, const Symbol symbol_2)
 
 void Symbols::LoadSymbols(const std::string& file_name)
 {
-	if (this->LoadPsyQSymbols(file_name)) {
+	if (this->LoadPsyqSymbols(file_name)) {
 		return;
 	}
-	if (this->LoadVObjSymbols(file_name)) {
+	if (this->LoadVasmVobjSymbols(file_name)) {
 		return;
 	}
 
 	throw std::runtime_error(("\"" + file_name + "\" is not a valid file.").c_str());
-}
-
-bool Symbols::LoadPsyQSymbols(const std::string& file_name)
-{
-	this->input_file_name = file_name;
-
-	std::ifstream input(file_name, std::ios::in | std::ios::binary);
-	if (!input.is_open()) {
-		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
-	}
-
-	char read_buffer[4];
-	ReadInput(input, read_buffer, 3);
-	read_buffer[3] = '\0';
-
-	if (strcmp(read_buffer, "MND")) {
-		return false;
-	}
-
-	ReadInput(input, read_buffer, 1);
-	if (read_buffer[0] != 1) {
-		return false;
-	}
-
-	input.seekg(8, std::ios_base::beg);
-
-	while (true) {
-		if (input.peek() == -1) {
-			break;
-		}
-
-		long long value = ReadInputNumberPsyQ(input, true);
-
-		char type;
-		ReadInput(input, &type, 1);
-
-		std::string name = ReadInputStringPsyQ(input);
-
-		if (type == 1 || type == 2) {
-			this->symbols.push_back({ name, value });
-		}
-	}
-
-	return true;
-}
-
-bool Symbols::LoadVObjSymbols(const std::string& file_name)
-{
-	this->input_file_name = file_name;
-
-	std::ifstream input(file_name, std::ios::in | std::ios::binary);
-	if (!input.is_open()) {
-		throw std::runtime_error(("Cannot open \"" + file_name  + "\" for reading.").c_str());
-	}
-
-	char read_buffer[5];
-	ReadInput(input, read_buffer, 4);
-	read_buffer[4] = '\0';
-
-	if (strcmp(read_buffer, "VOBJ")) {
-		return false;
-	}
-	input.seekg(1, std::ios_base::cur);
-
-	ReadInputNumberVObj(input, false);
-	ReadInputNumberVObj(input, false);
-	ReadInputStringVObj(input);
-	ReadInputNumberVObj(input, false);
-
-	int symbol_count = ReadInputNumberVObj(input, false);
-
-	while (symbol_count-- > 0) {
-		std::string name = ReadInputStringVObj(input);
-		long long   type = ReadInputNumberVObj(input, false);
-
-		ReadInputNumberVObj(input, false);
-		ReadInputNumberVObj(input, false);
-
-		long long value = ReadInputNumberVObj(input, true);
-
-		ReadInputNumberVObj(input, false);
-
-		if (type == 3) {
-			this->symbols.push_back({ name, value });
-		}
-	}
-
-	return true;
 }
 
 void Symbols::AddSymbolInclude(std::string symbol)

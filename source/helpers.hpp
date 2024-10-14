@@ -17,17 +17,19 @@
 #ifndef HELPERS_HPP
 #define HELPERS_HPP
 
+#include <cstring>
 #include <fstream>
+#include <fstream>
+#include <iostream>
 #include <string>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
-extern std::string StringToLower      (const std::string& str);
-extern bool        CheckArgument      (const int argc, char* argv[], int& index, const std::string& option, bool ignore_case = true);
-extern void        ReadInput          (std::ifstream& input, char* const read_buffer, const std::streamsize read_count);
-extern long long   ReadInputNumberPsyQ(std::ifstream& input, bool is_signed);
-extern long long   ReadInputNumberVObj(std::ifstream& input, bool is_signed);
-extern std::string ReadInputStringPsyQ(std::ifstream& input);
-extern std::string ReadInputStringVObj(std::ifstream& input);
-extern bool        StringStartsWith   (const std::string& str, const std::string& prefix);
-extern bool        StringEndsWith     (const std::string& str, const std::string& suffix);
+extern std::string StringToLower   (const std::string& str);
+extern bool        CheckArgument   (const int argc, char* argv[], int& index, const std::string& option, bool ignore_case = true);
+extern void        ReadInput       (std::ifstream& input, char* const read_buffer, const std::streamsize read_count);
+extern bool        StringStartsWith(const std::string& str, const std::string& prefix);
+extern bool        StringEndsWith  (const std::string& str, const std::string& suffix);
 
 #endif // HELPERS_HPP
