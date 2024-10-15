@@ -43,9 +43,10 @@ int main(int argc, char* argv[])
 		             "           <-xs [suffix]>  - Exclude symbols with suffix" << std::endl <<
 	                 "           [input files]   - List of input files" << std::endl << std::endl <<
 	                 "Valid input file formats:" << std::endl << std::endl <<
+	                 "           Binary file generated from this tool" << std::endl <<
 	                 "           Psy-Q symbol file" << std::endl <<
 	                 "           vasm vobj file" << std::endl <<
-	                 "           Binary file generated from this tool" << std::endl << std::endl;
+	                 "           vasm vlink symbol file (default format only)" << std::endl << std::endl;
 		return -1;
 	}
 

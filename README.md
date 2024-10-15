@@ -6,9 +6,10 @@ This is a tool to extract symbols from Assembly output files.
 
 ## Supports
 
+* Binary files generated from this tool
 * Psy-Q symbol files
 * vasm vobj files
-* Binary files generated from this tool
+* vasm vlink symbol files (default format only)
 
 ## Usage
 

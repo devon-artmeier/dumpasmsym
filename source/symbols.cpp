@@ -34,6 +34,9 @@ void Symbols::LoadSymbols(const std::string& file_name)
 	if (this->LoadVasmVobjSymbols(file_name)) {
 		return;
 	}
+	if (this->LoadVlinkSymSymbols(file_name)) {
+		return;
+	}
 
 	throw std::runtime_error(("\"" + file_name + "\" is not a valid file.").c_str());
 }
