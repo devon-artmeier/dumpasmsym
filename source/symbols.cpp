@@ -69,7 +69,7 @@ void Symbols::AddSuffixExclude(const std::string& suffix)
 void Symbols::Filter()
 {
 	for (int i = 0; i < this->symbols.size(); i++) {
-		bool dont_filter = this->prefix_includes.empty() && this->suffix_includes.empty();
+		bool dont_filter = this->symbol_includes.empty() && this->prefix_includes.empty() && this->suffix_includes.empty();
 
 		for (const auto& prefix_include : prefix_includes) {
 			if (StringStartsWith(this->symbols[i].name, prefix_include)) {

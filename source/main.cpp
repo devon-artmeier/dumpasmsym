@@ -19,54 +19,45 @@
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		std::cout << "Usage: extract-symbols -i [input] -o [output] <-m [mode]> <-v [type]> <-b [base]> <-f [symbol]>" << std::endl <<
-		             "                       <-x [symbol]> <-p [prefix]> <-xp [prefix]> <-s [suffix]> <-xs [suffix]>" << std::endl << std::endl <<
-		             "           -i [input]     - Input file" << std::endl <<
-		             "           -o [output]    - Output file" << std::endl <<
-		             "           <-m [mode]>    - Output mode" << std::endl <<
-		             "                            bin - Binary (default)" << std::endl <<
-		             "                            asm - Assembly" << std::endl <<
-		             "                            c   - C" << std::endl <<
-		             "           <-v [type]>    - Value type (TEXT OUTPUT MODE ONLY)" << std::endl <<
-		             "                            u32 - Unsigned 32-bit (default)" << std::endl <<
-		             "                            u64 - Unsigned 64-bit" << std::endl <<
-		             "                            s32 - Signed 32-bit" << std::endl <<
-		             "                            s64 - Signed 64-bit" << std::endl <<
-		             "           <-b [base]>    - Numerical system (TEXT OUTPUT MODE ONLY)" << std::endl <<
-		             "                            hex - Hexadecimal (default)" << std::endl <<
-		             "                            dec - Decimal" << std::endl <<
-		             "                            bin - Binary" << std::endl <<
-		             "           <-f [symbol]>  - Force include symbol" << std::endl <<
-		             "           <-x [symbol]>  - Exclude symbol" << std::endl <<
-		             "           <-p [prefix]>  - Only include symbols with prefix" << std::endl <<
-		             "           <-xp [prefix]> - Exclude symbols with prefix" << std::endl <<
-		             "           <-s [suffix]>  - Only include symbols with suffix" << std::endl <<
-		             "           <-xs [suffix]> - Exclude symbols with suffix" << std::endl << std::endl <<
-		             "Valid input file formats:" << std::endl << std::endl <<
-			         "           Psy-Q symbol file" << std::endl <<
-			         "           vasm vobj file" << std::endl <<
-			         "           Binary file generated from this tool" << std::endl << std::endl;
+		std::cout << "Usage: extract-symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
+	                 "                       <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
+		             "           -o [output]     - Output file" << std::endl <<
+		             "           <-m [mode]>     - Output mode" << std::endl <<
+		             "                             bin - Binary (default)" << std::endl <<
+		             "                             asm - Assembly" << std::endl <<
+		             "                             c   - C" << std::endl <<
+		             "           <-v [type]>     - Value type (TEXT OUTPUT MODE ONLY)" << std::endl <<
+		             "                             u32 - Unsigned 32-bit (default)" << std::endl <<
+		             "                             u64 - Unsigned 64-bit" << std::endl <<
+		             "                             s32 - Signed 32-bit" << std::endl <<
+		             "                             s64 - Signed 64-bit" << std::endl <<
+		             "           <-b [base]>     - Numerical system (TEXT OUTPUT MODE ONLY)" << std::endl <<
+		             "                             hex - Hexadecimal (default)" << std::endl <<
+		             "                             dec - Decimal" << std::endl <<
+		             "                             bin - Binary" << std::endl <<
+		             "           <-iy [symbol]>  - Only include symbol" << std::endl <<
+		             "           <-xy [symbol]>  - Exclude symbol" << std::endl <<
+		             "           <-ip [prefix]>  - Only include symbols with prefix" << std::endl <<
+		             "           <-xp [prefix]>  - Exclude symbols with prefix" << std::endl <<
+		             "           <-is [suffix]>  - Only include symbols with suffix" << std::endl <<
+		             "           <-xs [suffix]>  - Exclude symbols with suffix" << std::endl <<
+	                 "           [input files]   - List of input files" << std::endl << std::endl <<
+	                 "Valid input file formats:" << std::endl << std::endl <<
+	                 "           Psy-Q symbol file" << std::endl <<
+	                 "           vasm vobj file" << std::endl <<
+	                 "           Binary file generated from this tool" << std::endl << std::endl;
 		return -1;
 	}
 
-	Symbols     symbols;
-	std::string input_file  = "";
-	std::string output_file = "";
-	OutputMode  output_mode = OutputMode::Binary;
-	ValueType   value_type  = ValueType::Unsigned32;
-	NumberBase  number_base = NumberBase::Hex;
+	Symbols                  symbols;
+	std::vector<std::string> input_files;
+	std::string              output_file = "";
+	OutputMode               output_mode = OutputMode::Binary;
+	ValueType                value_type  = ValueType::Unsigned32;
+	NumberBase               number_base = NumberBase::Hex;
 
 	try {
 		for (int i = 1; i < argc; i++) {
-			if (CheckArgument(argc, argv, i, "i")) {
-				if (!input_file.empty()) {
-					throw std::runtime_error("Input file already defined.");
-				}
-
-				input_file = argv[i];
-				continue;
-			}
-
 			if (CheckArgument(argc, argv, i, "o")) {
 				if (!output_file.empty()) {
 					throw std::runtime_error("Output file already defined.");
@@ -126,17 +117,17 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
-			if (CheckArgument(argc, argv, i, "f")) {
+			if (CheckArgument(argc, argv, i, "iy")) {
 				symbols.AddSymbolInclude(argv[i]);
 				continue;
 			}
 
-			if (CheckArgument(argc, argv, i, "x")) {
+			if (CheckArgument(argc, argv, i, "xy")) {
 				symbols.AddSymbolExclude(argv[i]);
 				continue;
 			}
 
-			if (CheckArgument(argc, argv, i, "p")) {
+			if (CheckArgument(argc, argv, i, "ip")) {
 				symbols.AddPrefixInclude(argv[i]);
 				continue;
 			}
@@ -146,7 +137,7 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
-			if (CheckArgument(argc, argv, i, "s")) {
+			if (CheckArgument(argc, argv, i, "is")) {
 				symbols.AddSuffixInclude(argv[i]);
 				continue;
 			}
@@ -156,17 +147,19 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
-			throw std::runtime_error(("Unknown argument \"" + (std::string)argv[i] + "\".").c_str());
+			input_files.push_back(argv[i]);
 		}
 
-		if (input_file.empty()) {
-			throw std::runtime_error("Input symbol file not defined.");
+		if (input_files.empty()) {
+			throw std::runtime_error("Input symbol files not defined.");
 		}
 		if (output_file.empty()) {
 			throw std::runtime_error("Output symbol file not defined.");
 		}
 
-		symbols.LoadSymbols(input_file);
+		for (const auto& input_file : input_files) {
+			symbols.LoadSymbols(input_file);
+		}
 		symbols.Filter();
 		symbols.Output(output_file, value_type, number_base, output_mode);
 	} catch (std::exception& e) {
