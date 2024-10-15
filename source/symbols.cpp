@@ -23,6 +23,9 @@ static bool CompareSymbols(const Symbol symbol_1, const Symbol symbol_2)
 
 void Symbols::LoadSymbols(const std::string& file_name)
 {
+	if (this->LoadBinarySymbols(file_name)) {
+		return;
+	}
 	if (this->LoadPsyqSymbols(file_name)) {
 		return;
 	}

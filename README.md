@@ -8,6 +8,7 @@ This is a tool to extract symbols from Assembly output files.
 
 * Psy-Q symbol files
 * vasm vobj files
+* Binary files generated from this tool
 
 ## Usage
 
@@ -40,6 +41,7 @@ This is a tool to extract symbols from Assembly output files.
 
     Little endian
     
+    Signature ("BSYM", 4 bytes)
     Number of symbols (4 bytes)
     For each symbol:
         Name character count (1 byte)

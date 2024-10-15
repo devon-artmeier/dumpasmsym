@@ -16,18 +16,14 @@
 
 #include "shared.hpp"
 
-static long long ReadInputNumber(std::ifstream& input, bool is_signed)
+static long long ReadInputNumber(std::ifstream& input, int bytes)
 {
-	unsigned char read_buffer[4] = { 0 };
+	unsigned char read_buffer[8] = { 0 };
 	long long     value          = 0;
 
-	ReadInput(input, reinterpret_cast<char*>(read_buffer), 4);
-	for (int i = 3; i >= 0; i--) {
-		value = (value << 8) | read_buffer[i];
-	}
-
-	if (is_signed && (value & (1LL << 31))) {
-		value |= ~(static_cast<long long>(1LL << 32) - 1);
+	ReadInput(input, reinterpret_cast<char*>(read_buffer), bytes);
+	while (bytes--) {
+		value = (value << 8) | read_buffer[bytes];
 	}
 
 	return value;
@@ -48,7 +44,7 @@ static std::string ReadInputString(std::ifstream& input)
 	return string;
 }
 
-bool Symbols::LoadPsyqSymbols(const std::string& file_name)
+bool Symbols::LoadBinarySymbols(const std::string& file_name)
 {
 	this->input_file_name = file_name;
 
@@ -57,36 +53,23 @@ bool Symbols::LoadPsyqSymbols(const std::string& file_name)
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
 	}
 
-	char read_buffer[4];
-	ReadInput(input, read_buffer, 3);
-	read_buffer[3] = '\0';
+	char read_buffer[5];
+	ReadInput(input, read_buffer, 4);
+	read_buffer[4] = '\0';
 
-	if (strcmp(read_buffer, "MND")) {
+	if (strcmp(read_buffer, "BSYM")) {
 		return false;
 	}
 
-	ReadInput(input, read_buffer, 1);
-	if (read_buffer[0] != 1) {
-		return false;
-	}
+	long long symbol_count = ReadInputNumber(input, 4);
+	std::cout << symbol_count << std::endl;
 
-	input.seekg(8, std::ios_base::beg);
-
-	while (true) {
-		if (input.peek() == -1) {
-			break;
-		}
-
-		long long value = ReadInputNumber(input, true);
-
-		char type;
-		ReadInput(input, &type, 1);
-
+	while (symbol_count--) {
 		std::string name = ReadInputString(input);
-
-		if (type == 1 || type == 2) {
-			this->symbols.push_back({ name, value });
-		}
+		std::cout << name << std::endl;
+		long long value  = ReadInputNumber(input, 8);
+		std::cout << value << std::endl;
+		this->symbols.push_back({ name, value });
 	}
 
 	return true;

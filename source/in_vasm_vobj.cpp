@@ -18,7 +18,8 @@
 
 static long long ReadInputNumber(std::ifstream& input, bool is_signed)
 {
-	unsigned char read_buffer;
+	unsigned char read_buffer[8] = { 0 };
+	long long     value          = 0;
 	unsigned char bytes;
 	int           size;
 
@@ -27,14 +28,15 @@ static long long ReadInputNumber(std::ifstream& input, bool is_signed)
 		return static_cast<long long>(bytes);
 	}
 
-	long long value = 0;
 	if (bytes -= 0x80) {
+		if (bytes > 8) {
+			throw std::runtime_error(("Too many bytes specified for number (" + std::to_string(bytes) + ")").c_str());
+		}
 		size = bytes * 8;
 
-		int i = 0;
+		ReadInput(input, reinterpret_cast<char*>(read_buffer), bytes);
 		while (bytes--) {
-			ReadInput(input, reinterpret_cast<char*>(&read_buffer), 1);
-			value |= static_cast<long long>(read_buffer) << (i++ * 8);
+			value = (value << 8) | read_buffer[bytes];
 		}
 
 		if (is_signed && (value & (1LL << (size - 1)))) {
