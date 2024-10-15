@@ -48,3 +48,7 @@ This is a tool to extract symbols from Assembly output files.
         Name character count (1 byte)
         Name string data
         Value (8 bytes)
+    Number of input file names (4 bytes)
+    For each input file name:
+        File name character count (1 byte)
+        File name string data

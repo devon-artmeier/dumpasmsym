@@ -47,10 +47,13 @@ void Symbols::OutputBinary(const std::string& file_name, const ValueType value_t
 	output.write(signature, 4);
 
 	StoreNumber(output, this->symbols.size(), 4);
-
 	for (auto& symbol : this->symbols) {
-
 		StoreString(output, symbol.name);
 		StoreNumber(output, symbol.value, 8);
+	}
+
+	StoreNumber(output, this->input_file_names.size(), 4);
+	for (const auto& input_file_name : this->input_file_names) {
+		StoreString(output, input_file_name);
 	}
 }
