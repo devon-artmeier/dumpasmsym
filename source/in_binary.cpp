@@ -46,8 +46,6 @@ static std::string ReadInputString(std::ifstream& input)
 
 bool Symbols::LoadBinarySymbols(const std::string& file_name)
 {
-	this->input_file_name = file_name;
-
 	std::ifstream input(file_name, std::ios::in | std::ios::binary);
 	if (!input.is_open()) {
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());

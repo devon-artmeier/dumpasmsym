@@ -39,7 +39,7 @@ private:
 	void OutputAsm          (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
 	void OutputC            (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
 
-	std::string              input_file_name;
+	std::vector<std::string> input_file_names;
 	std::vector<Symbol>      symbols;
 	std::vector<std::string> symbol_includes;
 	std::vector<std::string> prefix_includes;

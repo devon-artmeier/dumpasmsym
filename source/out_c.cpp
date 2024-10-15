@@ -26,8 +26,11 @@ void Symbols::OutputC(const std::string& file_name, ValueType value_type, Number
 	int line_length = GetLineLength();
 
 	output << "// ------------------------------------------------------------------------------" << std::endl <<
-	          "// Symbols extracted from" << std::endl << "// " << this->input_file_name << std::endl <<
-	          "// ------------------------------------------------------------------------------" << std::endl << std::endl;
+	          "// Symbols extracted from" << std::endl;
+	for (const auto& input_file_name : input_file_names) {
+		output << "// " << input_file_name << std::endl;
+	}
+	output << "// ------------------------------------------------------------------------------" << std::endl << std::endl;
 
 	for (auto& symbol : this->symbols) {
 		output << "#define " << std::left << std::setw(line_length) << symbol.name << " (";
