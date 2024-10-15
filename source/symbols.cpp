@@ -115,7 +115,7 @@ void Symbols::Filter()
 			}
 		}
 
-		if (!dont_filter) {
+		if (dont_filter) {
 			this->symbols.erase(this->symbols.begin() + i--);
 		}
 	}
