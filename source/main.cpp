@@ -42,10 +42,10 @@ int main(int argc, char* argv[])
 		             "           <-xp [prefix]> - Exclude symbols with prefix" << std::endl <<
 		             "           <-s [suffix]>  - Only include symbols with suffix" << std::endl <<
 		             "           <-xs [suffix]> - Exclude symbols with suffix" << std::endl << std::endl <<
-		             "Valid input file formats:" << std::endl <<
+		             "Valid input file formats:" << std::endl << std::endl <<
 			         "           Psy-Q symbol file" << std::endl <<
 			         "           vasm vobj file" << std::endl <<
-			         "           Binary file generated from this tool" << std::endl;
+			         "           Binary file generated from this tool" << std::endl << std::endl;
 		return -1;
 	}
 
