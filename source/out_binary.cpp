@@ -43,7 +43,7 @@ void Symbols::OutputBinary(const std::string& file_name, const ValueType value_t
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for writing.").c_str());
 	}
 
-	char* signature = "BSYM";
+	const char* signature = "BSYM";
 	output.write(signature, 4);
 
 	StoreNumber(output, this->symbols.size(), 4);
