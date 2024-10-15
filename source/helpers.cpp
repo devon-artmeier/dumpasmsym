@@ -65,7 +65,8 @@ bool StringEndsWith(const std::string& str, const std::string& suffix)
 	return str.size() >= suffix.size() && str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
-void WriteOutputValue(std::ofstream& output, long long value, const ValueType value_type, const NumberBase number_base)
+void WriteOutputValue(std::ofstream& output, long long value, const std::string& hex_prefix, const std::string& bin_prefix,
+                      const ValueType value_type, const NumberBase number_base)
 {
 	if (value_type == ValueType::Signed32 || value_type == ValueType::Signed64) {
 		if (value < 0) {
@@ -82,13 +83,13 @@ void WriteOutputValue(std::ofstream& output, long long value, const ValueType va
 
 	switch (number_base) {
 		case NumberBase::Hex:
-			output << "0x" << std::hex << std::uppercase << value;
+			output << hex_prefix << std::hex << std::uppercase << value;
 			break;
 		case NumberBase::Decimal:
 			output << value;
 			break;
 		case NumberBase::Binary:
-			output << "0b";
+			output << bin_prefix;
 			if (value_type == ValueType::Unsigned32 || value_type == ValueType::Signed32) {
 				output << std::bitset<32>(value);
 			} else {

@@ -22,6 +22,7 @@ extern bool        CheckArgument   (const int argc, char* argv[], int& index, co
 extern void        ReadInput       (std::ifstream& input, char* const read_buffer, const std::streamsize read_count);
 extern bool        StringStartsWith(const std::string& str, const std::string& prefix);
 extern bool        StringEndsWith  (const std::string& str, const std::string& suffix);
-extern void        WriteOutputValue(std::ofstream& output, long long value, const ValueType value_type, const NumberBase number_base);
+extern void        WriteOutputValue(std::ofstream& output, long long value, const std::string& hex_prefix, const std::string& bin_prefix,
+                                    const ValueType value_type, const NumberBase number_base);
 
 #endif // HELPERS_HPP

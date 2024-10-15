@@ -34,7 +34,7 @@ void Symbols::OutputAsm(const std::string& file_name, const ValueType value_type
 
 	for (auto& symbol : this->symbols) {
 		output << std::left << std::setw(line_length) << symbol.name << "equ ";
-		WriteOutputValue(output, symbol.value, value_type, number_base);
+		WriteOutputValue(output, symbol.value, "$", "%", value_type, number_base);
 		output << std::endl;
 	}
 
