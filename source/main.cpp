@@ -19,8 +19,8 @@
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		std::cout << "Usage: extract-symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
-	                 "                       <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
+		std::cout << "Usage: extract_asm_symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
+	                 "                           <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
 		             "           -o [output]     - Output file" << std::endl <<
 		             "           <-m [mode]>     - Output mode" << std::endl <<
 		             "                             bin - Binary (default)" << std::endl <<
