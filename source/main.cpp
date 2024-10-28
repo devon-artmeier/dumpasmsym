@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
 		for (const auto& input_file : input_files) {
 			symbols.LoadSymbols(input_file);
 		}
-		symbols.Filter();
+		symbols.GetOutputSymbols();
 		symbols.Output(output_file, value_type, number_base, output_mode);
 	} catch (std::exception& e) {
 		std::cout << "Error: " << e.what() << std::endl;

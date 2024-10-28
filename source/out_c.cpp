@@ -32,7 +32,7 @@ void Symbols::OutputC(const std::string& file_name, ValueType value_type, Number
 	}
 	output << "// ------------------------------------------------------------------------------" << std::endl << std::endl;
 
-	for (auto& symbol : this->symbols) {
+	for (auto& symbol : this->symbols_out) {
 		output << "#define " << std::left << std::setw(line_length) << symbol.name << " (";
 		WriteOutputValue(output, symbol.value, "0x", "0b", value_type, number_base);
 		output << ")" << std::endl;

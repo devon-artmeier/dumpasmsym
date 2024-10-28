@@ -50,7 +50,7 @@ bool Symbols::LoadVlinkSymSymbols(const std::string& file_name)
 				return false;
 			}
 
-			this->symbols.push_back({ name, value });
+			this->AddSymbol(name, value);
 		}
 	}
 

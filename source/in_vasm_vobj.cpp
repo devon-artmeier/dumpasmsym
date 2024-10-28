@@ -98,7 +98,7 @@ bool Symbols::LoadVasmVobjSymbols(const std::string& file_name)
 		ReadInputNumber(input, false);
 
 		if (type == 3) {
-			this->symbols.push_back({ name, value });
+			this->AddSymbol(name, value);
 		}
 	}
 
