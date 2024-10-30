@@ -18,7 +18,7 @@
 
 bool Symbols::LoadVlinkSymSymbols(const std::string& file_name)
 {
-	std::ifstream input(file_name, std::ios::in | std::ios::binary);
+	std::ifstream input(file_name, std::ios::in);
 	if (!input.is_open()) {
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
 	}
