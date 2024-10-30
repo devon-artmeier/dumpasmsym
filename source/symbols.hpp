@@ -27,10 +27,11 @@ public:
 	void AddSymbolExclude(const std::string& symbol);
 	void AddPrefixExclude(const std::string& prefix);
 	void AddSuffixExclude(const std::string& suffix);
-	void Filter          ();
+	void GetOutputSymbols();
 	void Output          (const std::string& file_name, const ValueType value_type, const NumberBase number_base, const OutputMode output_mode);
 
 private:
+	void AddSymbol          (std::string name, long long value);
 	int  GetLineLength      ();
 	bool LoadBinarySymbols  (const std::string& file_name);
 	bool LoadPsyqSymbols    (const std::string& file_name);
@@ -39,15 +40,16 @@ private:
 	void OutputBinary       (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
 	void OutputAsm          (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
 	void OutputC            (const std::string& file_name, const ValueType value_type, const NumberBase number_base);
-
-	std::vector<std::string> input_file_names;
-	std::vector<Symbol>      symbols;
-	std::vector<std::string> symbol_includes;
-	std::vector<std::string> prefix_includes;
-	std::vector<std::string> suffix_includes;
-	std::vector<std::string> symbol_excludes;
-	std::vector<std::string> prefix_excludes;
-	std::vector<std::string> suffix_excludes;
+	
+	std::vector<std::string>                   input_file_names;
+	std::unordered_map<std::string, long long> symbols;
+	std::vector<Symbol>                        symbols_out;
+	std::vector<std::string>                   symbol_includes;
+	std::vector<std::string>                   prefix_includes;
+	std::vector<std::string>                   suffix_includes;
+	std::vector<std::string>                   symbol_excludes;
+	std::vector<std::string>                   prefix_excludes;
+	std::vector<std::string>                   suffix_excludes;
 };
 
 #endif // SYMBOLS_HPP

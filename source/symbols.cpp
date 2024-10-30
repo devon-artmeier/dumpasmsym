@@ -71,59 +71,13 @@ void Symbols::AddSuffixExclude(const std::string& suffix)
 	this->suffix_excludes.push_back(suffix);
 }
 
-void Symbols::Filter()
+void Symbols::GetOutputSymbols()
 {
-	for (int i = 0; i < this->symbols.size(); i++) {
-		bool dont_filter = this->symbol_includes.empty() && this->prefix_includes.empty() && this->suffix_includes.empty();
-
-		for (const auto& prefix_include : prefix_includes) {
-			if (StringStartsWith(this->symbols[i].name, prefix_include)) {
-				dont_filter = true;
-				break;
-			}
-		}
-
-		for (const auto& suffix_include : suffix_includes) {
-			if (StringEndsWith(this->symbols[i].name, suffix_include)) {
-				dont_filter = true;
-				break;
-			}
-		}
-
-		for (const auto& prefix_exclude : prefix_excludes) {
-			if (StringStartsWith(this->symbols[i].name, prefix_exclude)) {
-				dont_filter = false;
-				break;
-			}
-		}
-
-		for (const auto& suffix_exclude : suffix_excludes) {
-			if (StringEndsWith(this->symbols[i].name, suffix_exclude)) {
-				dont_filter = false;
-				break;
-			}
-		}
-
-		for (const auto& symbol_include : symbol_includes) {
-			if (this->symbols[i].name.compare(symbol_include) == 0) {
-				dont_filter = true;
-				break;
-			}
-		}
-
-		for (const auto& symbol_exclude : symbol_excludes) {
-			if (this->symbols[i].name.compare(symbol_exclude) == 0) {
-				dont_filter = false;
-				break;
-			}
-		}
-
-		if (!dont_filter) {
-			this->symbols.erase(this->symbols.begin() + i--);
-		}
+	this->symbols_out.clear();
+	for (const auto& symbol : this->symbols) {
+		this->symbols_out.push_back({ symbol.first, symbol.second });
 	}
-
-	std::sort(this->symbols.begin(), this->symbols.end(), CompareSymbols);
+	std::sort(this->symbols_out.begin(), this->symbols_out.end(), CompareSymbols);
 }
 
 void Symbols::Output(const std::string& file_name, const ValueType value_type, const NumberBase number_base, const OutputMode output_mode)
@@ -141,10 +95,62 @@ void Symbols::Output(const std::string& file_name, const ValueType value_type, c
 	}
 }
 
+void Symbols::AddSymbol(std::string name, long long value)
+{
+	bool dont_filter = this->symbol_includes.empty() && this->prefix_includes.empty() && this->suffix_includes.empty();
+
+	for (const auto& prefix_include : prefix_includes) {
+		if (StringStartsWith(name, prefix_include)) {
+			dont_filter = true;
+			break;
+		}
+	}
+	for (const auto& suffix_include : suffix_includes) {
+		if (StringEndsWith(name, suffix_include)) {
+			dont_filter = true;
+			break;
+		}
+	}
+	for (const auto& prefix_exclude : prefix_excludes) {
+		if (StringStartsWith(name, prefix_exclude)) {
+			dont_filter = false;
+			break;
+		}
+	}
+	for (const auto& suffix_exclude : suffix_excludes) {
+		if (StringEndsWith(name, suffix_exclude)) {
+			dont_filter = false;
+			break;
+		}
+	}
+	for (const auto& symbol_include : symbol_includes) {
+		if (name.compare(symbol_include) == 0) {
+			dont_filter = true;
+			break;
+		}
+	}
+	for (const auto& symbol_exclude : symbol_excludes) {
+		if (name.compare(symbol_exclude) == 0) {
+			dont_filter = false;
+			break;
+		}
+	}
+
+	if (dont_filter) {
+		if (this->symbols.find(name) == this->symbols.end()) {
+			this->symbols[name] = value;
+		} else {
+			if (this->symbols[name] != value) {
+				throw std::runtime_error(("Multiple definitions of symbol \"" + name + "\" detected.").c_str());
+			}
+		}
+	}
+}
+
 int Symbols::GetLineLength()
 {
 	int line_length = 0;
-	for (const auto& symbol : this->symbols) {
+	for (const auto& symbol : this->symbols_out) {
 		if (symbol.name.size() > line_length) {
 			line_length = symbol.name.size();
 		}

@@ -83,7 +83,7 @@ bool Symbols::LoadPsyqSymbols(const std::string& file_name)
 		std::string name = ReadInputString(input);
 
 		if (type == 1 || type == 2) {
-			this->symbols.push_back({ name, value });
+			this->AddSymbol(name, value);
 		}
 	}
 

@@ -46,8 +46,8 @@ void Symbols::OutputBinary(const std::string& file_name, const ValueType value_t
 	const char* signature = "BSYM";
 	output.write(signature, 4);
 
-	StoreNumber(output, this->symbols.size(), 4);
-	for (auto& symbol : this->symbols) {
+	StoreNumber(output, this->symbols_out.size(), 4);
+	for (auto& symbol : this->symbols_out) {
 		StoreString(output, symbol.name);
 		StoreNumber(output, symbol.value, 8);
 	}

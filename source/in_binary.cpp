@@ -64,10 +64,8 @@ bool Symbols::LoadBinarySymbols(const std::string& file_name)
 
 	while (symbol_count--) {
 		std::string name = ReadInputString(input);
-		std::cout << name << std::endl;
 		long long value  = ReadInputNumber(input, 8);
-		std::cout << value << std::endl;
-		this->symbols.push_back({ name, value });
+		this->AddSymbol(name, value);
 	}
 
 	return true;

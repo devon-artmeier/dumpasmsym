@@ -1,6 +1,6 @@
 # Assembly Output Symbol Extractor
 
-[![Build Status](https://github.com/devon-artmeier/extract-asm-symbols/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/extract-asm-symbols/actions/workflows/cmake-multi-platform.yml)
+[![Build Status](https://github.com/devon-artmeier/extract_asm_symbols/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/extract_asm_symbols/actions/workflows/cmake-multi-platform.yml)
 
 This is a tool to extract symbols from Assembly output files.
 
@@ -13,8 +13,8 @@ This is a tool to extract symbols from Assembly output files.
 
 ## Usage
 
-    Usage: extract-symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
-                           <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
+    Usage: extract_asm_symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
+                               <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
     
                -o [output]     - Output file
                <-m [mode]>     - Output mode
