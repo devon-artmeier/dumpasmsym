@@ -6,6 +6,7 @@ add_executable(extract_asm_symbols
 	"source/helpers.cpp"
 	"source/in_binary.cpp"
 	"source/in_psyq.cpp"
+	"source/in_vasm_lst.cpp"
 	"source/in_vasm_vobj.cpp"
 	"source/in_vlink_sym.cpp"
 	"source/out_asm.cpp"

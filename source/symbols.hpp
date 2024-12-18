@@ -35,6 +35,7 @@ private:
 	int  GetLineLength      ();
 	bool LoadBinarySymbols  (const std::string& file_name);
 	bool LoadPsyqSymbols    (const std::string& file_name);
+	bool LoadVasmLstSymbols (const std::string& file_name);
 	bool LoadVasmVobjSymbols(const std::string& file_name);
 	bool LoadVlinkSymSymbols(const std::string& file_name);
 	void OutputBinary       (const std::string& file_name, const ValueType value_type, const NumberBase number_base);

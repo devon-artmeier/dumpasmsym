@@ -31,6 +31,9 @@ void Symbols::LoadSymbols(const std::string& file_name)
 	if (this->LoadPsyqSymbols(file_name)) {
 		return;
 	}
+	if (this->LoadVasmLstSymbols(file_name)) {
+		return;
+	}
 	if (this->LoadVasmVobjSymbols(file_name)) {
 		return;
 	}
