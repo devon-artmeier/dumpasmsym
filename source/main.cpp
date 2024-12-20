@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 {
 	if (argc < 2) {
 		std::cout << "Usage: extract_asm_symbols -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
-	                 "                           <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
+		             "                           <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
 		             "           -o [output]     - Output file" << std::endl <<
 		             "           <-m [mode]>     - Output mode" << std::endl <<
 		             "                             bin - Binary (default)" << std::endl <<
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		             "           <-xp [prefix]>  - Exclude symbols with prefix" << std::endl <<
 		             "           <-is [suffix]>  - Only include symbols with suffix" << std::endl <<
 		             "           <-xs [suffix]>  - Exclude symbols with suffix" << std::endl <<
-	                 "           [input files]   - List of input files" << std::endl << std::endl <<
+		             "           [input files]   - List of input files" << std::endl << std::endl <<
 		             "Valid input file formats:" << std::endl << std::endl <<
 		             "           Binary file generated from this tool" << std::endl <<
 		             "           Psy-Q symbol file" << std::endl <<
