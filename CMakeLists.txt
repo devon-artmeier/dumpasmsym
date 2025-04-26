@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-project(extasmsym LANGUAGES CXX)
+project(dumpasmsym LANGUAGES CXX)
 
-add_executable(extasmsym
+add_executable(dumpasmsym
 	"src/main.cpp"
 	"src/helpers.cpp"
 	"src/in_binary.cpp"
