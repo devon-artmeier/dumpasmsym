@@ -1,5 +1,5 @@
 
-[![Build Status](https://github.com/devon-artmeier/extasmsym/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/extasmsym/actions/workflows/cmake-multi-platform.yml)
+[![Build Status](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml)
 
 This is a tool to extract symbols from Assembly output files.
 
@@ -12,8 +12,8 @@ This is a tool to extract symbols from Assembly output files.
 
 ## Usage
 
-    Usage: extasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
-                     <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
+    Usage: dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
+                      <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
     
                -o [output]     - Output file
                <-m [mode]>     - Output mode
