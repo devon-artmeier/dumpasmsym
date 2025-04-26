@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-project(extract_asm_symbols LANGUAGES CXX)
+project(extasmsym LANGUAGES CXX)
 
-add_executable(extract_asm_symbols
+add_executable(extasmsym
 	"src/main.cpp"
 	"src/helpers.cpp"
 	"src/in_binary.cpp"
