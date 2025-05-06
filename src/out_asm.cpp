@@ -23,20 +23,26 @@ void Symbols::OutputAsm(const std::string& file_name, const ValueType value_type
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for writing.").c_str());
 	}
 
-	int line_length = GetLineLength();
+	if (input_file_names.empty()) {
+		output << "; ------------------------------------------------------------------------------" << std::endl <<
+		          "; No valid symbol files found" << std::endl;
+		output << "; ------------------------------------------------------------------------------";
+	} else {
+		int line_length = GetLineLength();
 
-	output << "; ------------------------------------------------------------------------------" << std::endl <<
-	          "; Symbols extracted from" << std::endl;
-	for (const auto& input_file_name : input_file_names) {
-		output << "; " << input_file_name << std::endl;
+		output << "; ------------------------------------------------------------------------------" << std::endl <<
+				  "; Symbols extracted from" << std::endl;
+		for (const auto& input_file_name : input_file_names) {
+			output << "; " << input_file_name << std::endl;
+		}
+		output << "; ------------------------------------------------------------------------------" << std::endl << std::endl;
+
+		for (auto& symbol : this->symbols_out) {
+			output << std::left << std::setw(line_length) << symbol.name << "equ ";
+			WriteOutputValue(output, symbol.value, "$", "%", value_type, number_base);
+			output << std::endl;
+		}
+
+		output << std::endl << "; ------------------------------------------------------------------------------";
 	}
-	output << "; ------------------------------------------------------------------------------" << std::endl << std::endl;
-
-	for (auto& symbol : this->symbols_out) {
-		output << std::left << std::setw(line_length) << symbol.name << "equ ";
-		WriteOutputValue(output, symbol.value, "$", "%", value_type, number_base);
-		output << std::endl;
-	}
-
-	output << std::endl << "; ------------------------------------------------------------------------------" << std::endl;
 }

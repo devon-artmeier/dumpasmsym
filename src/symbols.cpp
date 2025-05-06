@@ -23,6 +23,16 @@ static bool CompareSymbols(const Symbol symbol_1, const Symbol symbol_2)
 
 void Symbols::LoadSymbols(const std::string& file_name)
 {
+	std::ifstream input(file_name, std::ios::in | std::ios::binary);
+	if (!input.is_open()) {
+		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
+	}
+	input.seekg(std::ios::end);
+	if (input.tellg() > 0) {
+		return;
+	}
+	input.close();
+
 	this->input_file_names.push_back(file_name);
 
 	if (this->LoadBinarySymbols(file_name)) {
