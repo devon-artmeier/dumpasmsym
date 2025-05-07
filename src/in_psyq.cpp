@@ -55,6 +55,12 @@ bool Symbols::LoadPsyqSymbols(const std::string& file_name)
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
 	}
 
+	input.seekg(0, std::ios::end);
+	if (input.tellg() == 0) {
+		return false;
+	}
+	input.seekg(0, std::ios::beg);
+
 	char read_buffer[4];
 	ReadInput(input, read_buffer, 3);
 	read_buffer[3] = '\0';

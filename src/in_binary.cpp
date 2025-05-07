@@ -50,6 +50,12 @@ bool Symbols::LoadBinarySymbols(const std::string& file_name)
 	if (!input.is_open()) {
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for reading.").c_str());
 	}
+	
+	input.seekg(0, std::ios::end);
+	if (input.tellg() == 0) {
+		return false;
+	}
+	input.seekg(0, std::ios::beg);
 
 	char read_buffer[5];
 	ReadInput(input, read_buffer, 4);
