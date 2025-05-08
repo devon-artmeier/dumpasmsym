@@ -1,4 +1,4 @@
-
+# Assembly Symbol Dumper
 [![Build Status](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml)
 
 This is a tool to extract symbols from Assembly output files.
