@@ -13,7 +13,7 @@ This is a tool to extract symbols from Assembly output files.
 ## Usage
 
     dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
-               <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
+        <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
     
                -o [output]     - Output file
                <-m [mode]>     - Output mode
