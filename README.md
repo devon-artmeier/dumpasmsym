@@ -37,6 +37,13 @@ This is a tool to extract symbols from Assembly output files.
         <-xs [suffix]>  - Exclude symbols with suffix
         [input files]   - List of input files
 
+## Build Instructions
+
+CMake is required to build this.
+
+* On Windows, you can run "make.bat" and the built executable will be put in the "out/bin" folder.
+* On other systems, you can call "make" and then "make install".
+
 ## Binary Output Format
 
     Little endian
