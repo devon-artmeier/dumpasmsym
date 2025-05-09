@@ -13,3 +13,5 @@ add_executable(dumpasmsym
 	"src/out_binary.cpp"
 	"src/out_c.cpp"
 	"src/symbols.cpp")
+
+install(TARGETS dumpasmsym)
