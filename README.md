@@ -1,4 +1,5 @@
 # Assembly Symbol Dumper
+
 [![Build Status](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/devon-artmeier/dumpasmsym/actions/workflows/cmake-multi-platform.yml)
 
 This is a tool to extract symbols from Assembly output files.
@@ -12,8 +13,9 @@ This is a tool to extract symbols from Assembly output files.
 
 ## Usage
 
-    dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>
-               <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]
+    dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-f [offset]> <-iy [symbol]>
+               <-xy [symbol]> <-ip [prefix]> <-xp [prefix]> <-ap [prefix]> <-is [suffix]>
+               <-xs [suffix]> <-as [suffix]> [input files]
     
         -o [output]     - Output file
         <-m [mode]>     - Output mode
@@ -29,13 +31,23 @@ This is a tool to extract symbols from Assembly output files.
                           hex - Hexadecimal (default)
                           dec - Decimal
                           bin - Binary
+        <-f [offset]>   - Add offset to symbol values
+                          Labels can be added in text output mode
         <-iy [symbol]>  - Only include symbol
         <-xy [symbol]>  - Exclude symbol
         <-ip [prefix]>  - Only include symbols with prefix
         <-xp [prefix]>  - Exclude symbols with prefix
+        <-ap [prefix]>  - Add prefix to symbol names
         <-is [suffix]>  - Only include symbols with suffix
         <-xs [suffix]>  - Exclude symbols with suffix
+        <-as [suffix]>  - Add suffix to symbol names
         [input files]   - List of input files
+    
+    Valid input file formats:
+        Binary file generated from this tool
+        Psy-Q symbol file
+        vasm vobj file
+        vasm vlink symbol file (default format only)";
 
 ## Build Instructions
 
