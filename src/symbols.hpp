@@ -21,6 +21,7 @@ class Symbols
 {
 public:
 	void LoadSymbols     (const std::string& file_name);
+	void SetValueOffset  (const std::string& offset);
 	void AddSymbolInclude(const std::string& symbol);
 	void AddPrefixInclude(const std::string& prefix);
 	void AddSuffixInclude(const std::string& suffix);
@@ -47,6 +48,7 @@ private:
 	std::vector<std::string>                   input_file_names;
 	std::unordered_map<std::string, long long> symbols;
 	std::vector<Symbol>                        symbols_out;
+	std::string                                value_offset   { "" };
 	std::vector<std::string>                   symbol_includes;
 	std::vector<std::string>                   prefix_includes;
 	std::vector<std::string>                   suffix_includes;

@@ -44,6 +44,14 @@ void Symbols::LoadSymbols(const std::string& file_name)
 	throw std::runtime_error(("\"" + file_name + "\" is not a valid file.").c_str());
 }
 
+void Symbols::SetValueOffset(const std::string& offset)
+{
+	if (!this->value_offset.empty()) {
+		throw std::runtime_error("Value offset already defined.");
+	}
+	this->value_offset = offset;
+}
+
 void Symbols::AddSymbolInclude(const std::string& symbol)
 {
 	this->symbol_includes.push_back(symbol);

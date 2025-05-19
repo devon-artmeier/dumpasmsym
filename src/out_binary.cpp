@@ -43,13 +43,20 @@ void Symbols::OutputBinary(const std::string& file_name, const ValueType value_t
 		throw std::runtime_error(("Cannot open \"" + file_name + "\" for writing.").c_str());
 	}
 
+	long long value_offset_int = 0;
+	try {
+		value_offset_int = std::stoll(this->value_offset, nullptr, 16);
+	} catch (...) {
+		throw std::runtime_error(("Invalid value offset \"" + this->value_offset + "\".").c_str());
+	}
+
 	const char* signature = "BSYM";
 	output.write(signature, 4);
 
 	StoreNumber(output, this->symbols_out.size(), 4);
 	for (auto& symbol : this->symbols_out) {
 		StoreString(output, symbol.name);
-		StoreNumber(output, symbol.value, 8);
+		StoreNumber(output, symbol.value + value_offset_int, 8);
 	}
 
 	StoreNumber(output, this->input_file_names.size(), 4);

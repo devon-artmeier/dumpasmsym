@@ -19,9 +19,9 @@
 int main(int argc, char* argv[])
 {
 	if (argc < 2) {
-		std::cout << "Usage: dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
-		             "                  <-ip [prefix]> <-xp [prefix]> <-ap [prefix]> <-is [suffix]> <-xs [suffix]>" << std::endl <<
-		             "                  <-as [suffix]> [input files]" << std::endl << std::endl <<
+		std::cout << "Usage: dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-f [offset]> <-iy [symbol]>" << std::endl <<
+		             "                  <-xy [symbol]> <-ip [prefix]> <-xp [prefix]> <-ap [prefix]> <-is [suffix]>" << std::endl <<
+		             "                  <-xs [suffix]> <-as [suffix]> [input files]" << std::endl << std::endl <<
 		             "           -o [output]     - Output file" << std::endl <<
 		             "           <-m [mode]>     - Output mode" << std::endl <<
 		             "                             bin - Binary (default)" << std::endl <<
@@ -36,6 +36,8 @@ int main(int argc, char* argv[])
 		             "                             hex - Hexadecimal (default)" << std::endl <<
 		             "                             dec - Decimal" << std::endl <<
 		             "                             bin - Binary" << std::endl <<
+		             "           <-f [offset]>   - Add offset to symbol values" << std::endl <<
+		             "                             Labels can be added in text output mode" << std::endl <<
 		             "           <-iy [symbol]>  - Only include symbol" << std::endl <<
 		             "           <-xy [symbol]>  - Exclude symbol" << std::endl <<
 		             "           <-ip [prefix]>  - Only include symbols with prefix" << std::endl <<
@@ -118,6 +120,11 @@ int main(int argc, char* argv[])
 					throw std::runtime_error(("Invalid numerical system \"" + (std::string)argv[i] + "\"").c_str());
 				}
 
+				continue;
+			}
+
+			if (CheckArgument(argc, argv, i, "f")) {
+				symbols.SetValueOffset(argv[i]);
 				continue;
 			}
 
