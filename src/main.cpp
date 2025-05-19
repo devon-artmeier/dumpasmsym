@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 		             "           Binary file generated from this tool" << std::endl <<
 		             "           Psy-Q symbol file" << std::endl <<
 		             "           vasm vobj file" << std::endl <<
-		             "           vasm vlink symbol file (default format only)";
+		             "           vasm vlink symbol file (default format only)" << std::endl << std::endl;
 		return -1;
 	}
 
