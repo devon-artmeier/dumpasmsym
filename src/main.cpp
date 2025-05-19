@@ -20,7 +20,8 @@ int main(int argc, char* argv[])
 {
 	if (argc < 2) {
 		std::cout << "Usage: dumpasmsym -o [output] <-m [mode]> <-v [type]> <-b [base]> <-iy [symbol]> <-xy [symbol]>" << std::endl <<
-		             "                  <-ip [prefix]> <-xp [prefix]> <-is [suffix]> <-xs [suffix]> [input files]" << std::endl << std::endl <<
+		             "                  <-ip [prefix]> <-xp [prefix]> <-ap [prefix]> <-is [suffix]> <-xs [suffix]>" << std::endl <<
+		             "                  <-as [suffix]> [input files]" << std::endl << std::endl <<
 		             "           -o [output]     - Output file" << std::endl <<
 		             "           <-m [mode]>     - Output mode" << std::endl <<
 		             "                             bin - Binary (default)" << std::endl <<
@@ -39,14 +40,16 @@ int main(int argc, char* argv[])
 		             "           <-xy [symbol]>  - Exclude symbol" << std::endl <<
 		             "           <-ip [prefix]>  - Only include symbols with prefix" << std::endl <<
 		             "           <-xp [prefix]>  - Exclude symbols with prefix" << std::endl <<
+		             "           <-ap [prefix]>  - Add prefix to symbol names" << std::endl <<
 		             "           <-is [suffix]>  - Only include symbols with suffix" << std::endl <<
 		             "           <-xs [suffix]>  - Exclude symbols with suffix" << std::endl <<
+		             "           <-as [suffix]>  - Add suffix to symbol names" << std::endl <<
 		             "           [input files]   - List of input files" << std::endl << std::endl <<
 		             "Valid input file formats:" << std::endl << std::endl <<
 		             "           Binary file generated from this tool" << std::endl <<
 		             "           Psy-Q symbol file" << std::endl <<
 		             "           vasm vobj file" << std::endl <<
-		             "           vasm vlink symbol file (default format only)" << std::endl << std::endl;
+		             "           vasm vlink symbol file (default format only)";
 		return -1;
 	}
 
@@ -138,6 +141,11 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
+			if (CheckArgument(argc, argv, i, "ap")) {
+				symbols.SetPrefixAdd(argv[i]);
+				continue;
+			}
+
 			if (CheckArgument(argc, argv, i, "is")) {
 				symbols.AddSuffixInclude(argv[i]);
 				continue;
@@ -145,6 +153,11 @@ int main(int argc, char* argv[])
 
 			if (CheckArgument(argc, argv, i, "xs")) {
 				symbols.AddSuffixExclude(argv[i]);
+				continue;
+			}
+
+			if (CheckArgument(argc, argv, i, "as")) {
+				symbols.SetSuffixAdd(argv[i]);
 				continue;
 			}
 

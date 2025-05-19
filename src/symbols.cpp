@@ -74,11 +74,27 @@ void Symbols::AddSuffixExclude(const std::string& suffix)
 	this->suffix_excludes.push_back(suffix);
 }
 
+void Symbols::SetPrefixAdd(const std::string& prefix)
+{
+	if (!this->prefix_add.empty()) {
+		throw std::runtime_error("Prefix addition already defined.");
+	}
+	this->prefix_add = prefix;
+}
+
+void Symbols::SetSuffixAdd(const std::string& suffix)
+{
+	if (!this->suffix_add.empty()) {
+		throw std::runtime_error("Prefix addition already defined.");
+	}
+	this->prefix_add = suffix;
+}
+
 void Symbols::GetOutputSymbols()
 {
 	this->symbols_out.clear();
 	for (const auto& symbol : this->symbols) {
-		this->symbols_out.push_back({ symbol.first, symbol.second });
+		this->symbols_out.push_back({ this->prefix_add + symbol.first + this->suffix_add, symbol.second });
 	}
 	std::sort(this->symbols_out.begin(), this->symbols_out.end(), CompareSymbols);
 }
@@ -98,7 +114,7 @@ void Symbols::Output(const std::string& file_name, const ValueType value_type, c
 	}
 }
 
-void Symbols::AddSymbol(std::string name, long long value)
+void Symbols::AddSymbol(const std::string& name, long long value)
 {
 	bool dont_filter = this->symbol_includes.empty() && this->prefix_includes.empty() && this->suffix_includes.empty();
 

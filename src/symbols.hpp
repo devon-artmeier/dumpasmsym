@@ -27,11 +27,13 @@ public:
 	void AddSymbolExclude(const std::string& symbol);
 	void AddPrefixExclude(const std::string& prefix);
 	void AddSuffixExclude(const std::string& suffix);
+	void SetPrefixAdd    (const std::string& prefix);
+	void SetSuffixAdd    (const std::string& suffix);
 	void GetOutputSymbols();
 	void Output          (const std::string& file_name, const ValueType value_type, const NumberBase number_base, const OutputMode output_mode);
 
 private:
-	void AddSymbol          (std::string name, long long value);
+	void AddSymbol          (const std::string& name, long long value);
 	int  GetLineLength      ();
 	bool LoadBinarySymbols  (const std::string& file_name);
 	bool LoadPsyqSymbols    (const std::string& file_name);
@@ -51,6 +53,8 @@ private:
 	std::vector<std::string>                   symbol_excludes;
 	std::vector<std::string>                   prefix_excludes;
 	std::vector<std::string>                   suffix_excludes;
+	std::string                                prefix_add     { "" };
+	std::string                                suffix_add     { "" };
 };
 
 #endif // SYMBOLS_HPP
